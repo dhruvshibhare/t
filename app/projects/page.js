@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { InViewAnimation } from '../../components/InViewAnimation';
-import { PortfolioItem } from './PortfolioItem';
+import { PortfolioItem } from './PortfolioSection';
 
 const projects = [
 	{
