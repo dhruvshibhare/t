@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  basePath: '/shopvix',
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -13,11 +14,9 @@ const nextConfig = {
   swcMinify: true,
   optimizeFonts: true,
   experimental: {
-    optimizeCss: {
-      css: true,
-      inlineThreshold: 10240,
-      relativeAssets: true
-    }
+    optimizeCss: true,
+    legacyBrowsers: false,
+    scrollRestoration: true
   }
 };
 
