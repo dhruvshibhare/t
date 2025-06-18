@@ -1,12 +1,52 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import { InViewAnimation } from './InViewAnimation';
 
+// Smooth and slow scroll animation for image
 const PortfolioItem = ({ image, title, category, link }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const animationRef = useRef();
+
+  useEffect(() => {
+    let start = null;
+    let frame;
+    const duration = 8000; // 8 seconds
+    const maxScroll = 384; // height in px
+
+    function animateScroll(timestamp) {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      let progress = Math.min(elapsed / duration, 1);
+      if (isHovered) {
+        setScrollY(progress * maxScroll);
+        if (progress < 1) {
+          frame = requestAnimationFrame(animateScroll);
+        }
+      } else {
+        setScrollY((prev) => {
+          if (prev > 0) {
+            frame = requestAnimationFrame(() => setScrollY(prev - maxScroll / (duration / 16)));
+            return Math.max(prev - maxScroll / (duration / 16), 0);
+          }
+          return 0;
+        });
+      }
+    }
+
+    if (isHovered) {
+      frame = requestAnimationFrame(animateScroll);
+    } else {
+      frame = requestAnimationFrame(() => setScrollY(0));
+    }
+    return () => {
+      cancelAnimationFrame(frame);
+      start = null;
+    };
+  }, [isHovered]);
 
   return (
     <div 
@@ -18,11 +58,12 @@ const PortfolioItem = ({ image, title, category, link }) => {
         <img 
           src={image}
           alt={title}
-          className="w-full object-cover transition-transform duration-[8s] ease-linear"
+          className="w-full object-cover"
           style={{
             height: '615%',
-            transform: isHovered ? `translateY(calc(-100% + ${384}px))` : 'translateY(0)',
-            objectPosition: 'top'
+            transform: `translateY(calc(-100% + ${384 + scrollY}px))`,
+            objectPosition: 'top',
+            transition: isHovered ? 'none' : 'transform 0.8s cubic-bezier(0.4,0,0.2,1)'
           }}
         />
       </div>
