@@ -1,127 +1,191 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
+import { InViewAnimation } from '../../components/InViewAnimation';
+import { PortfolioItem } from './PortfolioItem';
+
+const projects = [
+	{
+		image: '/images/c1.png',
+		title: 'Corporate & Tech',
+		category: 'Corporate & Tech',
+		link: 'https://aizflex.webflow.io/',
+		description:
+			'A modern fintech platform with real-time data visualization and interactive dashboards.',
+	},
+	{
+		image: '/images/c2.png',
+		title: 'Corporate & Tech',
+		category: 'Corporate & Tech',
+		link: 'https://pulse-saas.webflow.io/',
+		description:
+			'Interactive 3D art gallery experience with WebGL and custom animations.',
+	},
+	{
+		image: '/images/c3.png',
+		title: 'Corporate & Tech',
+		category: 'Corporate & Tech',
+		link: 'https://tech-tribe.webflow.io/',
+		description:
+			'UX/UI design for an environmental sustainability platform with intuitive data reporting.',
+	},
+	{
+		image: '/images/c4.png',
+		title: 'Corporate & Tech',
+		category: 'Corporate & Tech',
+		link: 'https://corporata-template.webflow.io/',
+		description:
+			'E-commerce platform optimization reducing load time by 70% and increasing conversions.',
+	},
+	{
+		image: '/images/e1.png',
+		title: 'Eco Marketplace',
+		category: 'E-commerce',
+		link: 'https://zinzira.webflow.io/',
+		description:
+			'Streaming service with custom audio visualization and seamless playback.',
+	},
+	{
+		image: '/images/e2.png',
+		title: 'Eco Marketplace',
+		category: 'E-commerce',
+		link: 'https://flash-flow.webflow.io/',
+		description:
+			'Interactive space exploration experience with 3D planetary systems and educational content.',
+	},
+	{
+		image: '/images/e4.png',
+		title: 'Eco Marketplace',
+		category: 'E-commerce',
+		link: 'https://kidcube.webflow.io/',
+		description:
+			'Interactive space exploration experience with 3D planetary systems and educational content.',
+	},
+	{
+		image: '/images/e3.png',
+		title: 'Eco Marketplace',
+		category: 'E-commerce',
+		link: 'https://jewellery-nx.webflow.io/',
+		description:
+			'Interactive space exploration experience with 3D planetary systems and educational content.',
+	},
+	{
+		image: '/images/t1.png',
+		title: 'Travel & Real Estate',
+		category: 'Travel & Real estate',
+		link: 'https://real-estatoe.webflow.io/',
+		description:
+			'Interactive space exploration experience with 3D planetary systems and educational content.',
+	},
+	{
+		image: '/images/t2.png',
+		title: 'Travel & Real Estate',
+		category: 'Travel & Real estate',
+		link: 'https://urban-estate-template.webflow.io/',
+		description:
+			'Interactive space exploration experience with 3D planetary systems and educational content.',
+	},
+	{
+		image: '/images/t3.png',
+		title: 'Travel & Real Estate',
+		category: 'Travel & Real estate',
+		link: 'https://estyva.webflow.io/',
+		description:
+			'Interactive space exploration experience with 3D planetary systems and educational content.',
+	},
+	{
+		image: '/images/t.png',
+		title: 'Travel & Real Estate',
+		category: 'Travel & Real estate',
+		link: 'https://ruma-property-site.webflow.io/',
+		description:
+			'Interactive space exploration experience with 3D planetary systems and educational content.',
+	},
+	{
+		image: '/images/h1.png',
+		title: 'Healthcare Platform',
+		category: 'Healthcare Platform',
+		link: 'https://medpro-medical-template.webflow.io/',
+		description:
+			'Interactive space exploration experience with 3D planetary systems and educational content.',
+	},
+	{
+		image: '/images/h2.png',
+		title: 'Healthcare Platform',
+		category: 'Healthcare Platform',
+		link: 'https://doctorate-template.webflow.io/',
+		description:
+			'Interactive space exploration experience with 3D planetary systems and educational content.',
+	},
+];
+
+const categories = [
+	'All',
+	'Corporate & Tech',
+	'E-commerce',
+	'Travel & Real estate',
+	'Healthcare Platform',
+];
 
 export default function Projects() {
-  const [filter, setFilter] = useState('all');
-  
-  const projects = [
-    {
-      title: 'Lumina Finance',
-      category: 'web-development',
-      image: 'https://images.pexels.com/photos/7963572/pexels-photo-7963572.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      description: 'A modern fintech platform with real-time data visualization and interactive dashboards.'
-    },
-    {
-      title: 'Orbital Gallery',
-      category: 'interactive',
-      image: 'https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      description: 'Interactive 3D art gallery experience with WebGL and custom animations.'
-    },
-    {
-      title: 'Eco Impact',
-      category: 'design',
-      image: 'https://images.pexels.com/photos/4064432/pexels-photo-4064432.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      description: 'UX/UI design for an environmental sustainability platform with intuitive data reporting.'
-    },
-    {
-      title: 'Velocity Store',
-      category: 'performance',
-      image: 'https://images.pexels.com/photos/2536965/pexels-photo-2536965.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      description: 'E-commerce platform optimization reducing load time by 70% and increasing conversions.'
-    },
-    {
-      title: 'Harmony Music',
-      category: 'web-development',
-      image: 'https://images.pexels.com/photos/1626481/pexels-photo-1626481.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      description: 'Streaming service with custom audio visualization and seamless playback.'
-    },
-    {
-      title: 'Nebula Explorer',
-      category: 'interactive',
-      image: 'https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      description: 'Interactive space exploration experience with 3D planetary systems and educational content.'
-    }
-  ];
-  
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === filter);
+	const [activeCategory, setActiveCategory] = useState('All');
+	const filteredProjects =
+		activeCategory === 'All'
+			? projects
+			: projects.filter((p) => p.category === activeCategory);
 
-  const filters = [
-    { value: 'all', label: 'All Projects' },
-    { value: 'web-development', label: 'Web Development' },
-    { value: 'interactive', label: 'Interactive' },
-    { value: 'design', label: 'Design' },
-    { value: 'performance', label: 'Performance' }
-  ];
-
-  return (
-    <div className="container mx-auto px-4 py-24">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="max-w-4xl mx-auto text-center mb-20"
-      >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Projects</h1>
-        <p className="text-lg md:text-xl text-muted-foreground">
-          Explore our portfolio of innovative digital experiences across various industries.
-        </p>
-      </motion.div>
-      
-      <div className="flex justify-center gap-4 flex-wrap mb-12">
-        {filters.map((item) => (
-          <button
-            key={item.value}
-            onClick={() => setFilter(item.value)}
-            className={`px-5 py-2 rounded-full transition-colors ${
-              filter === item.value
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted hover:bg-muted/80'
-            }`}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
-      
-      <motion.div 
-        layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
-      >
-        {filteredProjects.map((project, index) => (
-          <motion.div
-            key={project.title}
-            layout
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="group cursor-pointer"
-          >
-            <div className="relative h-64 overflow-hidden rounded-xl mb-4">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                style={{ objectFit: 'cover' }}
-                className="transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="bg-background text-foreground rounded-full p-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  <ArrowUpRight className="h-6 w-6" />
-                </div>
-              </div>
-            </div>
-            <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-            <p className="text-muted-foreground">{project.description}</p>
-          </motion.div>
-        ))}
-      </motion.div>
-    </div>
-  );
+	return (
+		<section className="py-20 bg-background">
+			<div className="container mx-auto px-4 md:px-6">
+				<InViewAnimation>
+					<div className="text-center mb-12">
+						<h2 className="text-3xl md:text-4xl font-bold mb-4">
+							Portfolio & Templates
+						</h2>
+						<p className="text-muted-foreground max-w-2xl mx-auto">
+							Explore our portfolio of successful projects & Templates that
+							showcase our expertise and commitment to excellence.
+						</p>
+					</div>
+				</InViewAnimation>
+				<InViewAnimation>
+					<div className="flex flex-wrap justify-center mb-10">
+						<div className="flex flex-wrap justify-center gap-2 mb-10 max-w-4xl mx-auto">
+							{categories.map((category) => (
+								<button
+									key={category}
+									onClick={() => setActiveCategory(category)}
+									className={`px-4 py-2 rounded-full text-sm transition-colors ${
+										activeCategory === category
+											? 'bg-primary text-primary-foreground'
+											: 'bg-muted text-muted-foreground hover:bg-muted/80'
+									}`}
+								>
+									{category}
+								</button>
+							))}
+						</div>
+					</div>
+				</InViewAnimation>
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+					{filteredProjects.map((project, index) => (
+						<InViewAnimation key={index} delay={index * 100}>
+							<PortfolioItem {...project} />
+						</InViewAnimation>
+					))}
+				</div>
+				<InViewAnimation>
+					<div className="text-center mt-12">
+						<Link
+							href="/contact"
+							className="inline-flex items-center bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 px-6 rounded-md transition-colors"
+						>
+							Start Your Project
+						</Link>
+					</div>
+				</InViewAnimation>
+			</div>
+		</section>
+	);
 }

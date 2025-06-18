@@ -15,7 +15,7 @@ const PortfolioItem = ({ image, title, category, link }) => {
     let start = null;
     let frame;
     const duration = 8000; // 8 seconds
-    const maxScroll = 384; // height in px
+    const maxScroll = 120; // scroll down by 120px
 
     function animateScroll(timestamp) {
       if (!start) start = timestamp;
@@ -58,10 +58,10 @@ const PortfolioItem = ({ image, title, category, link }) => {
         <img 
           src={image}
           alt={title}
-          className="w-full object-cover"
+          className="w-full object-cover transition-transform duration-1000"
           style={{
-            height: '615%',
-            transform: `translateY(calc(-100% + ${384 + scrollY}px))`,
+            height: '100%',
+            transform: `translateY(${scrollY}px)`,
             objectPosition: 'top',
             transition: isHovered ? 'none' : 'transform 0.8s cubic-bezier(0.4,0,0.2,1)'
           }}
