@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/shopvix',
+  basePath: '/t',
   eslint: {
     ignoreDuringBuilds: true,
   },
