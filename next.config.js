@@ -13,8 +13,11 @@ const nextConfig = {
   swcMinify: true,
   optimizeFonts: true,
   experimental: {
-    optimizeCss: true,
-    optimizeServerReact: true
+    optimizeCss: {
+      css: true,
+      inlineThreshold: 10240,
+      relativeAssets: true
+    }
   }
 };
 
