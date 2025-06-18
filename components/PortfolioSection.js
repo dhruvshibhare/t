@@ -1,85 +1,196 @@
 'use client';
 
-import { useRef } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { motion, useInView } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+import { InViewAnimation } from './InViewAnimation';
+
+const PortfolioItem = ({ image, title, category, link }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div 
+      className="relative overflow-hidden rounded-lg group cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="h-96 overflow-hidden">
+        <img 
+          src={image}
+          alt={title}
+          className="w-full object-cover transition-transform duration-[8s] ease-linear"
+          style={{
+            height: '615%',
+            transform: isHovered ? `translateY(calc(-100% + ${384}px))` : 'translateY(0)',
+            objectPosition: 'top'
+          }}
+        />
+      </div>
+      <div 
+        className={`absolute inset-0 bg-gradient-to-t from-background/80 to-background/30 flex flex-col justify-end p-6 transition-all duration-300 ${
+          isHovered ? 'opacity-100' : 'opacity-0 md:opacity-0'
+        }`}
+      >
+        <h3 className="text-xl font-semibold text-white mb-1">{title}</h3>
+        <p className="text-muted-foreground mb-4">{category}</p>
+        <a 
+          href={link} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
+        >
+          View Project <ExternalLink size={16} className="ml-1" />
+        </a>
+      </div>
+    </div>
+  );
+};
 
 export default function PortfolioSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-  
   const projects = [
     {
-      title: 'Lumina Finance',
-      category: 'Web Development',
-      image: 'https://images.pexels.com/photos/7963572/pexels-photo-7963572.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
+      image: 'images/c1.png',
+      title: 'Corporate & Tech',
+      category: 'Corporate & Tech',
+      link: 'https://aizflex.webflow.io/',
     },
     {
-      title: 'Orbital Gallery',
-      category: 'Interactive Experience',
-      image: 'https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
+      image: 'images/c2.png',
+      title: 'Corporate & Tech',
+      category: 'Corporate & Tech',
+      link: 'https://pulse-saas.webflow.io/',
     },
     {
-      title: 'Eco Impact',
-      category: 'UX/UI Design',
-      image: 'https://images.pexels.com/photos/4064432/pexels-photo-4064432.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
-    }
+      image: 'images/c3.png',
+      title: 'Corporate & Tech',
+      category: 'Corporate & Tech',
+      link: 'https://tech-tribe.webflow.io/',
+    },
+    {
+      image: 'images/c4.png',
+      title: 'Corporate & Tech',
+      category: 'Corporate & Tech',
+      link: 'https://corporata-template.webflow.io/',
+    },
+    {
+      image: 'images/e1.png',
+      title: 'Eco Marketplace',
+      category: 'E-commerce',
+      link: 'https://zinzira.webflow.io/',
+    },
+    {
+      image: 'images/e2.png',
+      title: 'Eco Marketplace',
+      category: 'E-commerce',
+      link: 'https://flash-flow.webflow.io/',
+    },
+    {
+      image: 'images/e4.png',
+      title: 'Eco Marketplace',
+      category: 'E-commerce',
+      link: 'https://kidcube.webflow.io/',
+    },
+    {
+      image: 'images/e3.png',
+      title: 'Eco Marketplace',
+      category: 'E-commerce',
+      link: 'https://jewellery-nx.webflow.io/',
+    },
+    {
+      image: 'images/t1.png',
+      title: 'Travel & Real Estate',
+      category: 'Travel & Real estate',
+      link: 'https://real-estatoe.webflow.io/',
+    },
+    {
+      image: 'images/t2.png',
+      title: 'Travel & Real Estate',
+      category: 'Travel & Real estate',
+      link: 'https://urban-estate-template.webflow.io/',
+    },
+    {
+      image: 'images/t3.png',
+      title: 'Travel & Real Estate',
+      category: 'Travel & Real estate',
+      link: 'https://estyva.webflow.io/',
+    },
+    {
+      image: 'images/t.png',
+      title: 'Travel & Real Estate',
+      category: 'Travel & Real estate',
+      link: 'https://ruma-property-site.webflow.io/',
+    },
+    {
+      image: 'images/h1.png',
+      title: 'Healthcare Platform',
+      category: 'Healthcare Platform',
+      link: 'https://medpro-medical-template.webflow.io/',
+    },
+    {
+      image: 'images/h2.png',
+      title: 'Healthcare Platform',
+      category: 'Healthcare Platform',
+      link: 'https://doctorate-template.webflow.io/',
+    },
   ];
   
+  const categories = ['All', 'Corporate & Tech', 'E-commerce', 'Travel & Real estate', 'Healthcare Platform'];
+  const [activeCategory, setActiveCategory] = useState('Travel & Real estate');
+
+  const filteredProjects = activeCategory === 'All' 
+    ? projects 
+    : projects.filter(project => project.category === activeCategory);
+
   return (
-    <section ref={ref} className="py-24">
-      <div className="container mx-auto px-4">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16"
-        >
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Work</h2>
-            <p className="text-lg text-muted-foreground max-w-lg">
-              Explore our latest projects showcasing our expertise in web development and design.
+    <section id="work" className="py-20 bg-background">
+      <div className="container mx-auto px-4 md:px-6">
+        <InViewAnimation>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Portfolio & Templates</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Explore our portfolio of successful projects & Templates that showcase our expertise and commitment to excellence.
             </p>
           </div>
-          
-          <Link 
-            href="/projects"
-            className="mt-6 md:mt-0 px-6 py-3 bg-secondary text-secondary-foreground rounded-md font-medium hover:bg-secondary/80 transition-colors flex items-center"
-          >
-            View All Projects <ArrowUpRight className="ml-2 h-4 w-4" />
-          </Link>
-        </motion.div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="group cursor-pointer"
-            >
-              <div className="relative h-80 overflow-hidden rounded-xl mb-4">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  width="600"
-                  height="400"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="bg-background text-foreground rounded-full p-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <ArrowUpRight className="h-6 w-6" />
-                  </div>
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground mb-1">{project.category}</p>
-              <h3 className="text-xl font-bold">{project.title}</h3>
-            </motion.div>
+        </InViewAnimation>
+
+        <InViewAnimation>
+          <div className="flex flex-wrap justify-center mb-10">
+            <div className="flex flex-wrap justify-center gap-2 mb-10 max-w-4xl mx-auto">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                    activeCategory === category
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+        </InViewAnimation>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredProjects.map((project, index) => (
+            <InViewAnimation key={index} delay={index * 100}>
+              <PortfolioItem {...project} />
+            </InViewAnimation>
           ))}
         </div>
+
+        <InViewAnimation>
+          <div className="text-center mt-12">
+            <Link 
+              href="#contact" 
+              className="inline-flex items-center bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 px-6 rounded-md transition-colors"
+            >
+              Start Your Project
+            </Link>
+          </div>
+        </InViewAnimation>
       </div>
     </section>
   );
