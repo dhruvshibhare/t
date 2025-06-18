@@ -6,15 +6,16 @@ const nextConfig = {
   },
   images: { 
     unoptimized: true,
-    formats: ['image/webp', 'image/avif'],
-  },
-  experimental: {
-    optimizeCss: true,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   swcMinify: true,
+  optimizeFonts: true,
+  experimental: {
+    optimizeCss: true,
+    optimizeServerReact: true
+  }
 };
 
 module.exports = nextConfig;
